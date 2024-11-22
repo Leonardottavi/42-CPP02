@@ -6,7 +6,7 @@
 /*   By: lottavi <lottavi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:38 by lottavi           #+#    #+#             */
-/*   Updated: 2024/11/21 18:02:20 by lottavi          ###   ########.fr       */
+/*   Updated: 2024/11/22 15:57:55 by lottavi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <string>
+#include <sstream>
 
 class Fixed
 {

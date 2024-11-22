@@ -6,26 +6,70 @@
 /*   By: lottavi <lottavi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:43 by lottavi           #+#    #+#             */
-/*   Updated: 2024/11/21 18:02:24 by lottavi          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:37:48 by lottavi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include "Fixed.hpp"
 
-int main()
-{
-	Fixed a;
-	Fixed const b(10);
-	Fixed const c(42.42f);
-	Fixed const d(b);
-	a = Fixed(1234.4321f);
+// Function to check if a string can be converted to a float
+bool isValidFloat(const std::string& str) {
+	std::istringstream iss(str);
+	float f;
+	iss >> std::noskipws >> f; // noskipws considers whitespace as part of the input
+	return iss.eof() && !iss.fail(); // true if the entire stringstream was consumed and the conversion was successful
+}
 
+int main(int argc, char **argv) {
+	float arg1, arg2, arg3, arg4;
+
+	if (argc < 2) {
+		std::string response;
+		std::cout << "No arguments provided. Do you want to use default parameters (10, 42.42, 10, 1234.4321)? (y/n): ";
+		std::cin >> response;
+
+		if (response == "y" || response == "Y") {
+			// Use default parameters
+			arg1 = 10;
+			arg2 = 42.42;
+			arg3 = 10;
+			arg4 = 1234.4321;
+		} else {
+			// Ask the user to input four float values
+			std::cout << "Please enter four float values: ";
+			std::cin >> arg1 >> arg2 >> arg3 >> arg4;
+		}
+	} else if (argc < 5) {
+		// If the number of arguments is insufficient, display an error message
+		std::cerr << "Usage: " << argv[0] << " <float1> <float2> <float3> <float4>" << std::endl;
+		return 1;
+	} else {
+		// Check if the provided arguments are valid float values
+		if (!isValidFloat(argv[1]) || !isValidFloat(argv[2]) || !isValidFloat(argv[3]) || !isValidFloat(argv[4])) {
+			std::cerr << "Error: Invalid float values provided." << std::endl;
+			return 1;
+		}
+		// Convert the arguments to float
+		arg1 = std::atof(argv[1]);
+		arg2 = std::atof(argv[2]);
+		arg3 = std::atof(argv[3]);
+		arg4 = std::atof(argv[4]);
+	}
+
+	// Create Fixed objects with the provided values
+	Fixed a;
+	Fixed const b(arg1);
+	Fixed const c(arg2);
+	Fixed const d(arg3);
+	a = Fixed(arg4);
+
+	// Print the values of the Fixed objects
 	std::cout << "a is " << a << std::endl;
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
 
+	// Print the values of the Fixed objects as integers
 	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
@@ -33,3 +77,22 @@ int main()
 
 	return 0;
 }
+
+/*
+int main( void ) {
+Fixed a;
+Fixed const b( 10 );
+Fixed const c( 42.42f );
+Fixed const d( b );
+a = Fixed( 1234.4321f );
+std::cout << "a is " << a << std::endl;
+std::cout << "b is " << b << std::endl;
+std::cout << "c is " << c << std::endl;
+std::cout << "d is " << d << std::endl;
+std::cout << "a is " << a.toInt() << " as integer" << std::endl;
+std::cout << "b is " << b.toInt() << " as integer" << std::endl;
+std::cout << "c is " << c.toInt() << " as integer" << std::endl;
+std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+return 0;
+}
+*/
