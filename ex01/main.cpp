@@ -6,47 +6,58 @@
 /*   By: lottavi <lottavi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:43 by lottavi           #+#    #+#             */
-/*   Updated: 2024/11/22 16:37:48 by lottavi          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:11:35 by lottavi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 // Function to check if a string can be converted to a float
-bool isValidFloat(const std::string& str) {
+bool isValidFloat(const std::string& str)
+{
 	std::istringstream iss(str);
 	float f;
 	iss >> std::noskipws >> f; // noskipws considers whitespace as part of the input
 	return iss.eof() && !iss.fail(); // true if the entire stringstream was consumed and the conversion was successful
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 	float arg1, arg2, arg3, arg4;
 
-	if (argc < 2) {
+	if (argc < 2)
+	{
 		std::string response;
 		std::cout << "No arguments provided. Do you want to use default parameters (10, 42.42, 10, 1234.4321)? (y/n): ";
 		std::cin >> response;
 
-		if (response == "y" || response == "Y") {
+		if (response == "y" || response == "Y")
+		{
 			// Use default parameters
 			arg1 = 10;
 			arg2 = 42.42;
 			arg3 = 10;
 			arg4 = 1234.4321;
-		} else {
+		}
+		else
+		{
 			// Ask the user to input four float values
 			std::cout << "Please enter four float values: ";
 			std::cin >> arg1 >> arg2 >> arg3 >> arg4;
 		}
-	} else if (argc < 5) {
+	}
+	else if (argc < 5)
+	{
 		// If the number of arguments is insufficient, display an error message
 		std::cerr << "Usage: " << argv[0] << " <float1> <float2> <float3> <float4>" << std::endl;
 		return 1;
-	} else {
+	}
+	else
+	{
 		// Check if the provided arguments are valid float values
-		if (!isValidFloat(argv[1]) || !isValidFloat(argv[2]) || !isValidFloat(argv[3]) || !isValidFloat(argv[4])) {
-			std::cerr << "Error: Invalid float values provided." << std::endl;
+		if (!isValidFloat(argv[1]) || !isValidFloat(argv[2]) || !isValidFloat(argv[3]) || !isValidFloat(argv[4]))
+		{
+			std::cerr << "\033[1;31mError: Invalid float values provided.\033[0m" << std::endl;
 			return 1;
 		}
 		// Convert the arguments to float
