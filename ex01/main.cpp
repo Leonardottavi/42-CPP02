@@ -6,19 +6,18 @@
 /*   By: lottavi <lottavi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:10:43 by lottavi           #+#    #+#             */
-/*   Updated: 2024/11/26 15:11:35 by lottavi          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:40:57 by lottavi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-// Function to check if a string can be converted to a float
-bool isValidFloat(const std::string& str)
-{
+// Function to check if a string is a valid float
+bool isValidFloat(const std::string& str) {
 	std::istringstream iss(str);
 	float f;
-	iss >> std::noskipws >> f; // noskipws considers whitespace as part of the input
-	return iss.eof() && !iss.fail(); // true if the entire stringstream was consumed and the conversion was successful
+	iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+	return iss.eof() && !iss.fail(); // Check if the entire string was consumed and if the conversion was successful
 }
 
 int main(int argc, char **argv)
@@ -42,8 +41,19 @@ int main(int argc, char **argv)
 		else
 		{
 			// Ask the user to input four float values
+			std::string input1, input2, input3, input4;
 			std::cout << "Please enter four float values: ";
-			std::cin >> arg1 >> arg2 >> arg3 >> arg4;
+			std::cin >> input1 >> input2 >> input3 >> input4;
+
+			if (!isValidFloat(input1) || !isValidFloat(input2) || !isValidFloat(input3) || !isValidFloat(input4))
+			{
+				std::cerr << "\033[1;31mError: Invalid float values provided.\033[0m" << std::endl;
+				return 1;
+			}
+			arg1 = std::atof(argv[1]);
+			arg2 = std::atof(argv[2]);
+			arg3 = std::atof(argv[3]);
+			arg4 = std::atof(argv[4]);
 		}
 	}
 	else if (argc < 5)
@@ -79,12 +89,6 @@ int main(int argc, char **argv)
 	std::cout << "b is " << b << std::endl;
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
-
-	// Print the values of the Fixed objects as integers
-	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
-	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 
 	return 0;
 }
